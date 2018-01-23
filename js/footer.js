@@ -19,7 +19,7 @@ document.querySelectorAll(".footer__powered")[0]
 
 document.querySelectorAll(".tooltip__informations__list__element")[0]
     .addEventListener('click', function() {
-        chrome.runtime.sendMessage({name: 'uninstall'});
+        chrome.runtime.sendMessage({name: 'uninstall', text: this.getAttribute('data-text')});
     });
 
 document.querySelectorAll(".tooltip__informations__list__element")[1]
