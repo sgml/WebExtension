@@ -1,4 +1,5 @@
 "use strict";
+var browser = chrome;
 
 browser.runtime.onMessage.addListener((message, sender, callback) => {
     switch (message.name) {

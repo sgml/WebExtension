@@ -45,7 +45,7 @@ document.querySelectorAll(".account__logout")[0]
 browser.storage.local.get(["userExtension"], object => {
     object = JSON.parse(object.userExtension);
     username.textContent = object.username;
-    boardsLink.href = PROTOCOLE + BOARDS_URL + "/user/" + object.username + '?client=ext-firefox-ol';
+    boardsLink.href = PROTOCOLE + BOARDS_URL + "/user/" + object.username + '?client=ext-chrome-ol';
 });
 
 browser.runtime.sendMessage({name: "get_login_action"});

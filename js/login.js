@@ -54,7 +54,9 @@ document.querySelectorAll(".login__input__register")[0]
         browser.runtime.sendMessage("close-popup");
     });
 
-document.querySelectorAll(".login__input__lost-password")[0]
-    .addEventListener("click", function () {
-        browser.runtime.sendMessage("close-popup");
-    });
+if (document.querySelectorAll(".login__input__lost-password").length > 0) {
+    document.querySelectorAll(".login__input__lost-password")[0]
+        .addEventListener("click", function () {
+            browser.runtime.sendMessage("close-popup");
+        });
+}

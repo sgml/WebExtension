@@ -20,44 +20,49 @@ var changeStyle = function (state) {
     }
 };
 
-document.querySelectorAll(".tracking-protection__content__button")[0]
-    .addEventListener("click", function () {
-        var checkbox = document.querySelectorAll(".tracking-protection__content__button__checkbox")[0];
+if (document.querySelectorAll(".tracking-protection__content__button").length > 0) {
+    document.querySelectorAll(".tracking-protection__content__button")[0]
+        .addEventListener("click", function () {
+            var checkbox = document.querySelectorAll(".tracking-protection__content__button__checkbox")[0];
 
-        var blockDisplay = document.querySelectorAll('.reload-msg')[0].style.display;
-        if (!blockDisplay || blockDisplay === 'none') {
-            document.body.style.height = parseInt(document.body.clientHeight + 50) + "px";
-            document.querySelectorAll('.overlay')[0].style.display = 'block';
-            document.querySelectorAll('.reload-msg')[0].style.display = 'block';
-            setTimeout(function() {
-                document.querySelectorAll('.overlay')[0].style.opacity = '.3';
-                document.querySelectorAll('.reload-msg')[0].style.bottom = '0';
-            }, 0);
-        }
+            var blockDisplay = document.querySelectorAll('.reload-msg')[0].style.display;
+            if (!blockDisplay || blockDisplay === 'none') {
+                document.body.style.height                                = parseInt(document.body.clientHeight + 50) + "px";
+                document.querySelectorAll('.overlay')[0].style.display    = 'block';
+                document.querySelectorAll('.reload-msg')[0].style.display = 'block';
+                setTimeout(function () {
+                    document.querySelectorAll('.overlay')[0].style.opacity   = '.3';
+                    document.querySelectorAll('.reload-msg')[0].style.bottom = '0';
+                }, 0);
+            }
 
-        if (checkbox.checked === true) {
-            browser.runtime.sendMessage({name: "tracking_protection_on"});
-            changeText(true);
-            changeStyle(true);
-            var setting = browser.privacy.websites.trackingProtectionMode.set({
-                value: "always"
-            });
-        } else {
-            browser.runtime.sendMessage({name: "tracking_protection_off"});
-            changeText(false);
-            changeStyle(false);
-            var setting = browser.privacy.websites.trackingProtectionMode.set({
-                value: "never"
-            });
-        }
-        browser.runtime.sendMessage({name: "close-popup"});
-    });
+            if (checkbox.checked === true) {
+                browser.runtime.sendMessage({name: "tracking_protection_on"});
+                changeText(true);
+                changeStyle(true);
+                var setting = browser.privacy.websites.trackingProtectionMode.set({
+                    value: "always"
+                });
+            } else {
+                browser.runtime.sendMessage({name: "tracking_protection_off"});
+                changeText(false);
+                changeStyle(false);
+                var setting = browser.privacy.websites.trackingProtectionMode.set({
+                    value: "never"
+                });
+            }
+            browser.runtime.sendMessage({name: "close-popup"});
+        });
+}
 
 browser.runtime.onMessage.addListener((message, sender, callback) => {
     switch (message.name) {
         case "tracking_protection_status":
             var checkbox = document.querySelectorAll(".tracking-protection__content__button__checkbox")[0];
             var checkboxElement = document.querySelectorAll(".tracking-protection__content__button")[0];
+
+            if (!checkbox || !checkboxElement)
+                break;
 
             textOK = message.text_enabled;
             textKO = message.text_disabled;
@@ -72,8 +77,9 @@ browser.runtime.onMessage.addListener((message, sender, callback) => {
     }
 });
 
-
-document.querySelectorAll(".tracking-protection__content__text")[0]
-    .addEventListener("click", function () {
-        browser.runtime.sendMessage({name: "close-popup"});
-    });
+if (document.querySelectorAll(".tracking-protection__content__text").length > 0) {
+    document.querySelectorAll(".tracking-protection__content__text")[0]
+        .addEventListener("click", function () {
+            browser.runtime.sendMessage({name: "close-popup"});
+        });
+}
